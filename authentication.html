@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #0a3e0aa9;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(232, 231, 155, 0.693);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    width: 80%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+button {
+    padding: 8px;
+    background: #007BFF;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#message {
+    font-size: 16px;
+    color: red;
+}
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <input type="text" id="regUsername" placeholder="Username">
+        <input type="password" id="regPassword" placeholder="Password">
+        <button onclick="register()">Register</button>
+
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+
+        <p id="message"></p>
+    </div>
+    <script>
+        function register() {
+    let username = document.getElementById("regUsername").value;
+    let password = document.getElementById("regPassword").value;
+
+    if (username === "" || password === "") {
+        document.getElementById("message").innerText = "Please enter valid credentials.";
+        return;
+    }
+
+    localStorage.setItem(username, password);
+    document.getElementById("message").innerText = "Registration successful! You can now log in.";
+}
+
+function login() {
+    let username = document.getElementById("loginUsername").value;
+    let password = document.getElementById("loginPassword").value;
+
+    if (localStorage.getItem(username) === password) {
+        document.getElementById("message").innerText = "Login successful! Redirecting...";
+        setTimeout(() => {
+            window.location.href = "secure.html"; // Redirect to a secured page
+        }, 1500);
+    } else {
+        document.getElementById("message").innerText = "Invalid username or password.";
+    }
+}
+
+    </script>
+</body>
+</html>

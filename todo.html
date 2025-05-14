@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #170450;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(114, 207, 206, 0.671);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 8px 15px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #ddd;
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.completed {
+    background: #8BC34A;
+    text-decoration: line-through;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do App</h1>
+        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <button onclick="addTask()">Add Task</button>
+
+        <h2>Pending Tasks</h2>
+        <ul id="pendingTasks"></ul>
+
+        <h2>Completed Tasks</h2>
+        <ul id="completedTasks"></ul>
+    </div>
+
+    <script >
+        function addTask() {
+    let taskInput = document.getElementById("taskInput");
+    let taskText = taskInput.value.trim();
+    let currentTime = new Date().toLocaleString();
+
+    if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+    }
+
+    let taskItem = document.createElement("li");
+    taskItem.innerHTML = `${taskText} <span>(${currentTime})</span> 
+        <button onclick="completeTask(this)">✔</button> 
+        <button onclick="editTask(this)">✏️</button> 
+        <button onclick="deleteTask(this)">❌</button>`;
+    
+    document.getElementById("pendingTasks").appendChild(taskItem);
+    taskInput.value = "";
+}
+
+function completeTask(button) {
+    let taskItem = button.parentElement;
+    let completedTime = new Date().toLocaleString();
+    
+    taskItem.classList.add("completed");
+    taskItem.innerHTML += ` <span>(Completed: ${completedTime})</span>`;
+    
+    document.getElementById("completedTasks").appendChild(taskItem);
+}
+
+function editTask(button) {
+    let taskItem = button.parentElement;
+    let newTaskText = prompt("Edit your task:", taskItem.firstChild.textContent);
+
+    if (newTaskText !== null) {
+        taskItem.firstChild.textContent = newTaskText;
+    }
+}
+
+function deleteTask(button) {
+    button.parentElement.remove();
+}
+
+    </script>
+</body>
+</html>
